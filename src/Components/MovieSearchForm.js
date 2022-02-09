@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
-function Searchbar({ onSubmit }) {
+function Searchbar() {
   const [searchField, setsearchField] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleSearch = (event) => {
     setsearchField(event.currentTarget.value.toLowerCase());
@@ -16,19 +18,18 @@ function Searchbar({ onSubmit }) {
       return;
     }
 
-    onSubmit(searchField);
+    setSearchParams({ query: event.currentTarget.elements.query.value });
     setsearchField("");
   };
 
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <button type="button" onClick={handleSubmit}>
-          Search
-        </button>
+        <button type="submit">Search</button>
         <input
           type="text"
           autoComplete="off"
+          name="query"
           autoFocus
           placeholder="Search movies here"
           value={searchField}
@@ -38,9 +39,5 @@ function Searchbar({ onSubmit }) {
     </>
   );
 }
-
-Searchbar.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};
 
 export default Searchbar;

@@ -1,22 +1,19 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { GetMovieCast } from "../Services/MoviesApi";
-import noImage from "../pictures/no-image.png";
+import { GetMovieCast } from "../../Services/MoviesApi";
+import noImage from "../../pictures/no-image.png";
 
 function MovieCastPage() {
   const { movieID } = useParams();
   const [cast, setCast] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchMovieCast() {
-      setLoading(true);
       try {
         const data = await GetMovieCast(movieID);
         setCast(data.cast);
       } catch (error) {
-      } finally {
-        setLoading(false);
+        console.log(error);
       }
     }
     fetchMovieCast();

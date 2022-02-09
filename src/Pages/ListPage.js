@@ -4,17 +4,14 @@ import { GetTrendingMovies } from "../Services/MoviesApi";
 
 function ListPage() {
   const [results, setResults] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function fetchMovies() {
-      setLoading(true);
       try {
         const data = await GetTrendingMovies();
         setResults(data.results);
       } catch (error) {
-      } finally {
-        setLoading(false);
+        console.log(error);
       }
     }
     fetchMovies();
